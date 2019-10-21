@@ -45,7 +45,7 @@ class Player:
         self.n = n
         self.rad = rad
         self.x , self.y = (windowWidth // 2, windowHeight - 20)
-        self.step = 3
+        self.step = windowWidth // n #3 for continous
         self.dead = False
     
     def drawPlayer(self, gameDisp):
@@ -76,7 +76,7 @@ class Agent(Player):
             self.Qtable = np.zeros((states, actions))
         
     def act(self, state, gameNo):
-        return np.argmax(self.Qtable[state, :])# + np.random.randn(1, self.actions) * (1 / (gameNo + 1)))
+        return np.argmax(self.Qtable[state, :] + np.random.randn(1, self.actions) * (1 / (gameNo + 1))) # for continous comment noise out
     
     
     # Q(s, a) += lr *(future best reward - Current known value)
@@ -119,7 +119,7 @@ class Game:
         
         
     def getState(self):
-        # if opening is to the left of Agent
+        # if opening is to the left of Agent                                                                              # for continous
         if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + self.blocks.cordsBlock[self.blocks.safeBlockIndex][2] <= self.player.x: return 0
         # if agent is between safeBlock
         if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x < self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]: return 1
@@ -131,6 +131,7 @@ class Game:
         self.player.reset()
         self.player.saveAgent()
         self.blocks.cordsBlock = self.blocks.buildCords()
+        self.blocks.speed = 0.5 # correction forgot to add in video 
         self.score = 0
     
     
@@ -179,6 +180,8 @@ class Game:
             if crossed:
                 self.score += 1
                 reward += 5
+                # uncomment below line to increase speed of agent for wrt to speed of block
+                # self.player.step += 1 # Correction 2
                 if self.score % 3 == 0 and self.blocks.speed < 10:
                     self.blocks.speed += 1
             reward += self.checkCrashed()
