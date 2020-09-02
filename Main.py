@@ -104,7 +104,7 @@ class Game:
         self.player = Agent(windowWidth, windowHeight, 5, 10, 3, 3)
         self.score = 0
         
-    def sayMessage(self, msg, fontType = 'freesansbold.ttf', color = (255, 255, 255), \
+    def sayMessage(self, msg, fontType = 'freesansbold.ttf', color = (255, 255, 255),
                    fontSize = 15, loc = (10, 10)):
         myMsg = pygame.font.Font(fontType, fontSize).render(msg, True, color)
         self.gameDisplay.blit(myMsg, loc)  
