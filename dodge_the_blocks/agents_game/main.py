@@ -31,10 +31,10 @@ class AgentGame(Game):
         self.num_states = agent_state
         
     def check_crashed(self):                 # y of block                   # height of block
-        if self.player.y-self.player.radius > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]: return 0
-        if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
-        self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + \
-        self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]: return 1
+        if self.player.y-self.player.radius > self.blocks.cords_block[0][1] + self.blocks.cords_block[0][3]: return 0
+        if self.blocks.cords_block[self.blocks.safe_block_index][0] < self.player.x <\
+        self.blocks.cords_block[self.blocks.safe_block_index][0] + \
+        self.blocks.cords_block[self.blocks.safe_block_index][2]: return 1
         self.player.dead = True
         return -1
         
@@ -42,15 +42,15 @@ class AgentGame(Game):
     def getState(self):
         if self.num_states == 3:
             # if agent is to the right of safeblock need to move left                                                                              # for continous
-            if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + self.blocks.cordsBlock[self.blocks.safeBlockIndex][2] <= self.player.x: return 0
+            if self.blocks.cords_block[self.blocks.safe_block_index][0] + self.blocks.cords_block[self.blocks.safe_block_index][2] <= self.player.x: return 0
             # if agent is between safeBlock should stay
-            if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x < self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]: return 1
+            if self.blocks.cords_block[self.blocks.safe_block_index][0] < self.player.x < self.blocks.cords_block[self.blocks.safe_block_index][0] + self.blocks.cords_block[self.blocks.safe_block_index][2]: return 1
             # if agent is to the left of safeblock should move right
-            if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] >= self.player.x: return 2
+            if self.blocks.cords_block[self.blocks.safe_block_index][0] >= self.player.x: return 2
         else:
             for i in range(5):
-                if self.blocks.cordsBlock[i][0] < self.player.x < self.blocks.cordsBlock[i][0] + self.blocks.cordsBlock[i][2]:
-                    return i*5 + self.blocks.safeBlockIndex
+                if self.blocks.cords_block[i][0] < self.player.x < self.blocks.cords_block[i][0] + self.blocks.cords_block[i][2]:
+                    return i*5 + self.blocks.safe_block_index
     def showState(self):
         table = self.player.Qtable
         xpos, ypos = 480, 120
@@ -102,11 +102,11 @@ class AgentGame(Game):
  
             self.game_display.fill((51, 51, 51)) # RGB  
             self.player.drawPlayer(self.game_display)
-            self.blocks.displayBlocks(self.game_display)
+            self.blocks.display_blocks(self.game_display)
             self.showState()
             self.say_message("Score : " + str(self.score)) # (10, 10)
             self.say_message("Episode : " + str(episode), loc = (410, 30))
-            crossed = self.blocks.dropBlocks()
+            crossed = self.blocks.drop_blocks()
             #print(self.getState())
             if crossed:
                 self.score += 1

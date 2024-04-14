@@ -11,7 +11,7 @@ class Game:
         self.window_height = window_height
         self.game_display = pygame.display.set_mode((window_width, window_height))
         pygame.display.set_caption("Dodge the Blocks!")
-        self.blocks = Block(window_width, window_height, n = 5, speed = 0.5)
+        self.blocks = Block(window_width, window_height, number_of_blocks = 5, speed = 0.5)
         self.player = Player(window_width, window_height, 5, 10)
         self.score = 0
         
@@ -21,14 +21,14 @@ class Game:
         self.game_display.blit(myMsg, loc)  
         
     def check_crashed(self):                 # y of block                   # height of block
-        if (self.player.y-self.player.radius > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]) or (self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
-        self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + \
-        self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]): return
+        if (self.player.y-self.player.radius > self.blocks.cords_block[0][1] + self.blocks.cords_block[0][3]) or (self.blocks.cords_block[self.blocks.safe_block_index][0] < self.player.x <\
+        self.blocks.cords_block[self.blocks.safe_block_index][0] + \
+        self.blocks.cords_block[self.blocks.safe_block_index][2]): return
         self.player.dead = True
         
 
     def reset(self):
-        self.blocks.cordsBlock = self.blocks.buildCords()
+        self.blocks.cords_block = self.blocks.build_cords()
         self.blocks.speed = 0.5 # correction forgot to add in video 
         self.score = 0
         self.player.dead = False
@@ -59,9 +59,9 @@ class Game:
                 
             self.game_display.fill(BACKGROUND_COLOR) # RGB  
             self.player.drawPlayer(self.game_display)
-            self.blocks.displayBlocks(self.game_display)
+            self.blocks.display_blocks(self.game_display)
             self.say_message("Score : " + str(self.score), loc=(self.window_width-80, 10)) # (10, 10)
-            crossed = self.blocks.dropBlocks()
+            crossed = self.blocks.drop_blocks()
             if crossed:
                 self.score += 1
                 # uncomment below line to increase speed of agent for wrt to speed of block

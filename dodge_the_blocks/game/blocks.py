@@ -3,31 +3,31 @@ import random
 
 class Block:
     
-    def __init__(self, windowWidth, windowHeight, n, speed):
-        self.windowWidth = windowWidth
-        self.windowHeight = windowHeight
-        self.n = n
+    def __init__(self, window_width: int, window_height: int, number_of_blocks: int, speed: int):
+        self.game_window_width = window_width
+        self.game_window_height = window_height
+        self.number_of_blocks = number_of_blocks
         self.speed = speed
-        self.widthOfBlock = windowWidth // n
-        self.heightOfBlock = windowHeight // 10
-        self.cordsBlock = self.buildCords()
+        self.width_of_block = window_width // number_of_blocks
+        self.height_of_block = window_height // 10
+        self.cords_block = self.build_cords()
         
-    def buildCords(self):
-        cords = [[0, 0, self.widthOfBlock, self.heightOfBlock]]
-        for i in range(1, self.n):
-            cords.append([cords[i-1][0] + self.widthOfBlock, 0, self.widthOfBlock, self.heightOfBlock])
-        self.safeBlockIndex = random.randint(0, self.n-1)
+    def build_cords(self):
+        cords = [[0, 0, self.width_of_block, self.height_of_block]]
+        for i in range(1, self.number_of_blocks):
+            cords.append([cords[i-1][0] + self.width_of_block, 0, self.width_of_block, self.height_of_block])
+        self.safe_block_index = random.randint(0, self.number_of_blocks-1)
         return cords
     
-    def displayBlocks(self, gameDisp):
-        for idx, cord in enumerate(self.cordsBlock):
-            if idx == self.safeBlockIndex: continue
-            pygame.draw.rect(gameDisp, (200, 0, 0), cord)
+    def display_blocks(self, game_disp):
+        for idx, cord in enumerate(self.cords_block):
+            if idx == self.safe_block_index: continue
+            pygame.draw.rect(game_disp, (200, 0, 0), cord)
             
-    def dropBlocks(self):
-        for cord in self.cordsBlock:
+    def drop_blocks(self):
+        for cord in self.cords_block:
             cord[1] += self.speed
-        if self.cordsBlock[0][1] > self.windowHeight:
-            self.cordsBlock = self.buildCords()
+        if self.cords_block[0][1] > self.game_window_height:
+            self.cords_block = self.build_cords()
             return True
         return False
