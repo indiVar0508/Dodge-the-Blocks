@@ -33,7 +33,7 @@ class AgentGame(Game):
         self.player = Agent(windowWidth // 2, windowHeight, 5, 10, agent_state, 3)
         self.num_states = agent_state
         
-    def checkCrashed(self):                 # y of block                   # height of block
+    def check_crashed(self):                 # y of block                   # height of block
         if self.player.y-self.player.rad > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]: return 0
         if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
         self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + \
@@ -58,25 +58,25 @@ class AgentGame(Game):
         table = self.player.Qtable
         xpos, ypos = 480, 120
         colours = [[255,0,0],[0,255,0],[0,0,255]]
-        self.sayMessage('*  LEFT         STAY       RIGHT',loc=(xpos,ypos))
+        self.say_message('*  LEFT         STAY       RIGHT',loc=(xpos,ypos))
         ypos += 40
         xpos = 520
         for row in table:
             for val in row:
                 if val < 0:
-                    pygame.draw.rect(self.gameDisplay, colours[0], (xpos, ypos, 10, 5))
+                    pygame.draw.rect(self.game_display, colours[0], (xpos, ypos, 10, 5))
                 elif val == 0:
-                    pygame.draw.rect(self.gameDisplay, colours[1], (xpos, ypos, 10, 5))
+                    pygame.draw.rect(self.game_display, colours[1], (xpos, ypos, 10, 5))
                 elif val > 0:
-                    pygame.draw.rect(self.gameDisplay, colours[2], (xpos, ypos, 10, 5))
+                    pygame.draw.rect(self.game_display, colours[2], (xpos, ypos, 10, 5))
                 xpos += 80
             ypos += 10
             xpos = 520
-        self.sayMessage('Green = Zero ',loc=(410, 450), color = (0, 255, 0))
-        self.sayMessage('Red = Negative ',loc = (410, 480), color = (255, 0, 0))
-        self.sayMessage('Blue = Positive ',loc = (410, 510), color = (0, 0, 255))
+        self.say_message('Green = Zero ',loc=(410, 450), color = (0, 255, 0))
+        self.say_message('Red = Negative ',loc = (410, 480), color = (255, 0, 0))
+        self.say_message('Blue = Positive ',loc = (410, 510), color = (0, 0, 255))
     
-    def startGame(self, episode):
+    def start_game(self, episode):
         left = right = False
         state = self.getState() # 0, 1, 2
         while not self.player.dead:
@@ -103,12 +103,12 @@ class AgentGame(Game):
                 
             stateDash = self.getState() #new state of agent
  
-            self.gameDisplay.fill((51, 51, 51)) # RGB  
-            self.player.drawPlayer(self.gameDisplay)
-            self.blocks.displayBlocks(self.gameDisplay)
+            self.game_display.fill((51, 51, 51)) # RGB  
+            self.player.drawPlayer(self.game_display)
+            self.blocks.displayBlocks(self.game_display)
             self.showState()
-            self.sayMessage("Score : " + str(self.score)) # (10, 10)
-            self.sayMessage("Episode : " + str(episode), loc = (410, 30))
+            self.say_message("Score : " + str(self.score)) # (10, 10)
+            self.say_message("Episode : " + str(episode), loc = (410, 30))
             crossed = self.blocks.dropBlocks()
             #print(self.getState())
             if crossed:
@@ -118,7 +118,7 @@ class AgentGame(Game):
                 # self.player.step += 1 # Correction 2
                 if self.score % 3 == 0 and self.blocks.speed < 10:
                     self.blocks.speed += 1
-            reward += self.checkCrashed()
+            reward += self.check_crashed()
             self.player.learn(state, action, reward, stateDash)
             state = stateDash
             pygame.display.update()            
@@ -127,7 +127,7 @@ class AgentGame(Game):
 if __name__ == "__main__":
     game = AgentGame()
     for episode in range(50):
-        game.startGame(episode)
+        game.start_game(episode)
         game.reset()
 
 

@@ -14,11 +14,11 @@ args = my_parser.parse_args()
 
 if args.use_agent is None:
     from game.main import Game
-    Game().startGame()
+    Game().play_game()
 else:
     from agents_game.main import AgentGame
     game = AgentGame(agent_state=args.use_agent)
     for episode in range(50):
-        game.startGame(episode)
+        game.start_game(episode)
         game.reset()
 
