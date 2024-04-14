@@ -19,6 +19,8 @@ else:
     from agents_game.main import AgentGame
     game = AgentGame(agent_state=args.use_agent)
     for episode in range(50):
-        game.start_game(episode)
+        gracefully_close= game.start_game(episode)
+        if gracefully_close is True:
+            break
         game.reset()
 
