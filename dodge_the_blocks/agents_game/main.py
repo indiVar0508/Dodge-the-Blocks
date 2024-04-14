@@ -14,7 +14,7 @@ class Agent(Player):
         states: int,
         actions: int,
         lr=0.8,
-        gamma=0.99,
+        gamma=1,
     ):
         super().__init__(window_width, window_height, num_blocks, radius)
         self.states = states
@@ -61,9 +61,9 @@ class AgentGame(Game):
             < self.blocks.cords_block[self.blocks.safe_block_index][0]
             + self.blocks.cords_block[self.blocks.safe_block_index][2]
         ):
-            return 1
+            return 5
         self.player.dead = True
-        return -1
+        return -30
 
     def getState(self):
         if self.num_states == 3:
@@ -146,9 +146,11 @@ class AgentGame(Game):
 
             if left:
                 self.player.moveLeft()
+                reward -= 1
                 left = False
             elif right:
                 self.player.moveRight()
+                reward -= 1
                 right = False
 
             stateDash = self.getState()  # new state of agent
@@ -162,7 +164,7 @@ class AgentGame(Game):
             crossed = self.blocks.drop_blocks()
             if crossed:
                 self.score += 1
-                reward += 5
+                reward += 10
                 if self.score % 3 == 0 and self.blocks.speed < 10:
                     self.blocks.speed += 1
             reward += self.check_crashed()
