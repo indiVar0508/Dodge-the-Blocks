@@ -3,7 +3,7 @@ import argparse
 my_parser = argparse.ArgumentParser(description='Run Game as per User\'s preference')
 
 my_parser.add_argument(
-    '-use_agent',
+    '--use_agent',
     metavar='use_agent',
     type=int,
     help='specify state for agent to play in 3 state vs 25 state',
