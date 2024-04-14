@@ -21,7 +21,7 @@ class Game:
         self.game_display.blit(myMsg, loc)  
         
     def check_crashed(self):                 # y of block                   # height of block
-        if (self.player.y-self.player.rad > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]) or (self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
+        if (self.player.y-self.player.radius > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]) or (self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
         self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + \
         self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]): return
         self.player.dead = True

@@ -18,10 +18,7 @@ class Agent(Player):
     # Q(s, a) += lr *(future best reward - Current known value)
     def learn(self, state, action, reward, stateDash):
         self.Qtable[state, action] += self.lr * (reward + self.gamma * np.max(self.Qtable[stateDash, :]) - self.Qtable[state, action])
-        
-    def reset(self):
-        self.x , self.y = (self.windowWidth // 2, self.windowHeight - 20)
-        self.dead = False
+
     
     
     
@@ -34,7 +31,7 @@ class AgentGame(Game):
         self.num_states = agent_state
         
     def check_crashed(self):                 # y of block                   # height of block
-        if self.player.y-self.player.rad > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]: return 0
+        if self.player.y-self.player.radius > self.blocks.cordsBlock[0][1] + self.blocks.cordsBlock[0][3]: return 0
         if self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] < self.player.x <\
         self.blocks.cordsBlock[self.blocks.safeBlockIndex][0] + \
         self.blocks.cordsBlock[self.blocks.safeBlockIndex][2]: return 1
